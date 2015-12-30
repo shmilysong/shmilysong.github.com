@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="智能社 - zhinengshe.com" />
+<meta name="copyright" content="智能社 - zhinengshe.com" />
+<meta name="description" content="智能社是一家专注于web前端开发技术的公司，目前主要提供JavaScript培训和HTML5培训两项服务，同时还推出了大量javascript基础知识教程，智能课堂为你带来全新的学习方法和快乐的学习体验。" />
+<title>智能社— http://www.zhinengshe.com</title>
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0" />
+<style>
+*{margin:0; padding:0; list-style:none;}
+html{font-size:20px;}
+#box{position:relative; top:0; left:0; overflow:hidden; width:16rem;height:10rem;}
+#box ul{position:absolute; top:0; left:0; width:80rem; height:10rem;}
+#box ul li{width:16rem; height:10rem; float:left; text-align:center; line-height:10rem; font-size:1.5rem;}
+</style>
+<script>
+window.onload=function(){
+	var fontS = document.documentElement.clientWidth*20/320;
+	document.documentElement.style.fontSize=fontS+'px';
+	window.onresize=function(){
+		fontS = document.documentElement.clientWidth*20/320;
+		document.documentElement.style.fontSize=fontS+'px';
+	};
+	
+	
+	var oBox = document.getElementById('box');
+	var oUl = document.querySelector('#box ul');
+	var aLi = document.querySelectorAll('#box ul li');
+	oUl.addEventListener('touchstart',function(ev){
+		var startX = ev.targetTouches[0].pageX/fontS;
+		var startY = ev.targetTouches[0].pageY/fontS;
+		var disX = ev.targetTouches[0].pageX/fontS-oUl.offsetLeft/fontS;
+		oUl.style.WebkitTransition='none';
+		
+		var dir = '';
+		function fnMove(ev){
+			if(dir==''){
+				if(Math.abs(ev.targetTouches[0].pageX/fontS-startX)>5/fontS)
+					dir='x';
+				if(Math.abs(ev.targetTouches[0].pageY/fontS-startY)>5/fontS)
+					dir='y';
+			}else{
+				if(dir=='x'){
+					oUl.style.left = ev.targetTouches[0].pageX/fontS-disX+'rem';
+					ev.preventDefault()	
+				}
+			}
+			
+		}
+		function fnEnd(){
+			oUl.removeEventListener('touchmove',fnMove,false);
+			oUl.removeEventListener('touchend',fnEnd,false);
+			
+			var n = Math.round(oUl.offsetLeft/aLi[0].offsetWidth);
+			
+			if(n>0){
+				n=0;
+			}else if(n<-(aLi.length-1)){
+				n=-(aLi.length-1);
+			}
+			
+			oUl.style.WebkitTransition='.7s all ease';
+			
+			oUl.style.left = n*aLi[0].offsetWidth/fontS+'rem';
+			
+			
+		}
+		
+		oUl.addEventListener('touchmove',fnMove,false);
+		oUl.addEventListener('touchend',fnEnd,false);
+	},false);
+};
+</script>
+</head>
+
+<body style="height:3000px;">
+<div id="box">
+	<ul>
+    	<li style="background:#fc0;">0</li>
+    	<li style="background:#f0c;">1</li>
+    	<li style="background:#c0f;">2</li>
+    	<li style="background:#cf0;">3</li>
+    	<li style="background:#0fc;">4</li>
+    </ul>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
